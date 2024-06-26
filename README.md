@@ -16,13 +16,13 @@ Before you begin, ensure you have the following installed on your machine:
 1. Clone the repository
 
    ```sh
-   git submodule update --init --recursive
-
-1. Initialize submodules 
-
-   ```sh
    git clone git@github.com:marksantosiress/posttrade-integration.git
    cd posttrade-integration
+
+1. Initialize submodules
+
+   ```sh
+   git submodule update --init --recursive
 
 ## Developing and Updating Submodules
 
