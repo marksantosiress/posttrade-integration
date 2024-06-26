@@ -1,0 +1,6 @@
+[submodule "mfe"]
+	path = mfe
+	url = git@github.com:oneiress/amt-posttrade-mfe.git
+[submodule "bff"]
+	path = bff
+	url = git@github.com:oneiress/amt-posttrade-bff.git
