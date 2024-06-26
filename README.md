@@ -38,7 +38,7 @@ The safest way to develop and update submodules is to navigate to each submodule
    ```sh
    git add .
    git commit -m "Update submodules to latest commits"
-   git commit -m "Update submodules to latest commits"
+   git push origin main
 
 ## Building and Running the project
 
