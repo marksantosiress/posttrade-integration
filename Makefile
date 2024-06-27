@@ -15,7 +15,7 @@ frontend_install:
 .PHONY: frontend_build
 frontend_build:
 	echo -e --- $(CYAN)Building the frontend project ...$(NC)
-	@docker-compose run --rm mfe-node yarn build:isolated
+	@docker-compose run --rm mfe-node yarn webpack --config /app/webpack.isolated.cjs
 
 .PHONY: bff_build
 bff_build:
