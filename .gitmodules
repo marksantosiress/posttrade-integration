@@ -4,3 +4,6 @@
 [submodule "bff"]
 	path = bff
 	url = git@github.com:oneiress/amt-posttrade-bff.git
+[submodule "subaccount-api"]
+	path = subaccount-api
+	url = git@github.com:oneiress/amt-posttrade-subaccount-api.git
