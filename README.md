@@ -1,6 +1,6 @@
 # Posttrade Integration Project
 
-This project integrates multiple posttrade componenets, including a frontend application (MFE), a backend BFF service, and an NGINX reverse proxy to handle CORS and URL rewriting. The project uses Docker and Docker Compose to build and run the services locally.
+This project integrates multiple posttrade componenets, including a frontend application (MFE), a backend BFF service, subaccount api, dynamoDB and an NGINX reverse proxy to handle CORS and URL rewriting. The project uses Docker and Docker Compose to build and run the services locally.
 
 ## Prerequisites
 
@@ -10,6 +10,7 @@ Before you begin, ensure you have the following installed on your machine:
 - Docker Compose
 - Make
 - authenticate
+- aws cli
 
 ## Setup
 
@@ -58,6 +59,8 @@ The safest way to develop and update submodules is to navigate to each submodule
    make start
 
    Go to: http://localhost
+
+   NOTE: nginx does not support hot realoding. Rebuild the code to verify changes.
 
 1. Stop the project
 

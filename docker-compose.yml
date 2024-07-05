@@ -37,16 +37,60 @@ services:
       ARTIFACTORY_USERNAME: ${ARTIFACTORY_USERNAME}
       ARTIFACTORY_ACCESS_TOKEN: ${ARTIFACTORY_ACCESS_TOKEN}
       ASPNETCORE_URLS: "http://+:8080"
+      SubAccountApiEndpoint: "http://subaccount-api:5021"
+
     volumes:
       - "./bff:/workspace:rw"
     ports:
       - "8080:8080"
 
+  subaccount-api:
+    build:
+      context: ./subaccount-api/app
+      dockerfile: Dockerfile
+      args:
+        DOCKER_REPO: ${DEFAULT_DOCKER_REPO}
+        ARTIFACTORY_URL: ${ARTIFACTORY_URL}
+        ARTIFACTORY_USERNAME: ${ARTIFACTORY_USERNAME}
+        ARTIFACTORY_ACCESS_TOKEN: ${ARTIFACTORY_ACCESS_TOKEN}
+    container_name: amt-posttrade-subaccount-api
+    environment:
+      ARTIFACTORY_URL: ${ARTIFACTORY_URL}
+      ARTIFACTORY_USERNAME: ${ARTIFACTORY_USERNAME}
+      ARTIFACTORY_ACCESS_TOKEN: ${ARTIFACTORY_ACCESS_TOKEN}
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ASPNETCORE_URLS: "http://+:5021"
+      AWS_ACCESS_KEY_ID: "fakeMyKeyId"
+      AWS_SECRET_ACCESS_KEY: "fakeSecretAccessKey"
+      DynamoDBConfiguration__Host: "http://dynamodb:8000"
+    volumes:
+      - "./subaccount-api:/workspace:rw"
+      - "./subaccount-api/configuration:/app/configuration:ro"
+    ports:
+      - "5021:5021"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5021/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3      
+
+  dynamodb:
+    image: ${DEFAULT_DOCKER_REPO}/amazon/dynamodb-local
+    user: ${USER_ID}:${GROUP_ID}
+    userns_mode: host
+    container_name: amt-posttrade-subaccount-dynamodb
+    environment:
+      AWS_ACCESS_KEY_ID: "fakeMyKeyId"
+      AWS_SECRET_ACCESS_KEY: "fakeSecretAccessKey"    
+    command: -jar DynamoDBLocal.jar -inMemory -sharedDb
+    ports:
+      - "8000:8000"
+
   nginx:
     image: nginx:latest
     container_name: nginx-proxy
     environment:
-      BASE_URL: "/"    
+      BASE_URL: "/"
     ports:
       - "80:80"
     volumes:
